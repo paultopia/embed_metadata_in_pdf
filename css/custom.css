@@ -1,0 +1,7 @@
+.section {
+  padding: 8rem 0 1rem;
+}
+
+input[type="file"] {
+    display: none;
+}
