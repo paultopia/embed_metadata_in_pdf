@@ -1,1 +1,0 @@
-{"mappings":"AAAA;;;;AAIA","sources":["css/custom.css"],"sourcesContent":[".section {\n  padding: 8rem 0 1rem;\n}\n\ninput[type=\"file\"] {\n    display: none;\n}\n"],"names":[],"version":3,"file":"index.62e6e564.css.map","sourceRoot":"/__parcel_source_root/"}
