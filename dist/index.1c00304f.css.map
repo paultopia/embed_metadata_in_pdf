@@ -1,0 +1,1 @@
+{"mappings":"ACAA,6BAIA","sources":["index.1c00304f.css","css/custom.css"],"sourcesContent":[".section {\n  padding: 8rem 0 1rem;\n}\n\ninput[type=\"file\"] {\n  display: none;\n}\n/*# sourceMappingURL=index.1c00304f.css.map */\n",".section {\n  padding: 8rem 0 1rem;\n}\n\ninput[type=\"file\"] {\n    display: none;\n}\n"],"names":[],"version":3,"file":"index.1c00304f.css.map"}
