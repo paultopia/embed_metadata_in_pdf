@@ -19,5 +19,9 @@
   "homepage": "https://github.com/paultopia/embed_metadata_in_pdf#readme",
   "devDependencies": {
     "parcel": "^2.12.0"
+  },
+  "dependencies": {
+    "coherentpdf": "^2.5.5",
+    "js-base64": "^3.7.7"
   }
 }
