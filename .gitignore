@@ -1,0 +1,14 @@
+logs
+*.log
+npm-debug.log*
+node_modules
+.npm
+.node_repl_history
+.DS_Store
+.cache/
+.parcel-cache/
+lib/
+tmp
+parcel-bundle-reports/
+package-lock.json
+
