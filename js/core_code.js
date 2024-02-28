@@ -61,8 +61,8 @@ function ensureEmbedDataIsSet(timeout) {
     return new Promise(waitForEmbedData);
  
     function waitForEmbedData(resolve, reject) {
-        if (window.embedState && window.embedState.complete)
-            resolve(window.embedState);
+        if (embedState && embedState.complete)
+            resolve(embedState);
         else if (timeout && (Date.now() - start) >= timeout)
             reject(new Error("timeout"));
         else
@@ -75,8 +75,8 @@ function ensureExtractDataIsSet(timeout) {
     return new Promise(waitForExtractData);
  
     function waitForExtractData(resolve, reject) {
-        if (window.extractState && window.extractState.complete)
-            resolve(window.extractState);
+        if (extractState && extractState.complete)
+            resolve(extractState);
         else if (timeout && (Date.now() - start) >= timeout)
             reject(new Error("timeout"));
         else
@@ -160,7 +160,8 @@ citesSelector.addEventListener('change', (event) => {
 	const textEncoder = new TextEncoder();
 	const xmpData = textEncoder.encode(asXMP);
 	embedState.xmp = xmpData;
-	if (window.embedState.pdf){
+	console.log(embedState);
+	if (embedState.pdf){
 	    embedState.complete = true;
 	    embedDataInPDf();
 	}
@@ -179,7 +180,8 @@ embedSelector.addEventListener('change', (event) => {
         const embedResult = event.target.result;
         embedState.pdf = embedResult;
 	embedState.pdfFileName = embedName;
-	if (window.embedState.xmp){
+	console.log(embedState);
+	if (embedState.xmp){
 	    embedState.complete = true;
 	    embedDataInPDf();
 	}
