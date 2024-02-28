@@ -1,4 +1,6 @@
-importScripts('coherentpdf.browser.min.js')
+const coherentpdf = require('coherentpdf')
+
+// importScripts('coherentpdf.browser.min.js')
 // this appears to find files relative to the directory the js is in, not relative to index.html (at least judging by chrome errors)
 
 self.onmessage = function(e) {

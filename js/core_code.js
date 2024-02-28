@@ -1,3 +1,5 @@
+import { Base64 } from 'js-base64';
+
 function makeXMP(jsonString, fileName){
     var b64Json = Base64.encode(jsonString);
     var xmpString =`<x:xmpmeta xmlns:x="adobe:ns:meta/">
@@ -91,7 +93,8 @@ function embedDataInPDf(){
 	var pdfName = embedState.pdfFileName;
 	var modifiedPdfName = `modified-${pdfName}`;
 	var datafile = new Uint8Array(embedState.xmp);
-	var w = new Worker("js/pdf_worker.js");
+	var w = new Worker(new URL("pdf_worker.js", import.meta.url), {type: 'module'})
+	// var w = new Worker("js/pdf_worker.js");
 	w.postMessage({mtype: 'embed', bytes: arr, metadata: datafile});
 	w.onmessage = function(e)
 	{
@@ -114,7 +117,8 @@ function extractDataFromPDf(){
     ensureExtractDataIsSet(100000).then(function(){
 	document.getElementById("progress").innerHTML = 'PDF File loaded from disc. Processing...';
 	var arr = new Uint8Array(extractState.pdf);
-	var w = new Worker("js/pdf_worker.js");
+	var w = new Worker(new URL("pdf_worker.js", import.meta.url), {type: 'module'})
+//	var w = new Worker("js/pdf_worker.js");
 	w.postMessage({mtype: 'extract', bytes: arr});
 	w.onmessage = function(e)
 	{
