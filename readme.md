@@ -6,4 +6,4 @@ This repo also contains two dependencies for this project, [Coherent PDF](https:
 
 ----
 
-note to self: dev build/server: `npx parcel index.html`build for prod `npx parcel build index.html`
+note to self: dev build/server: `npx parcel index.html`build for prod `npx parcel build index.html --public-url ./` (the last thing is to force it to use relative urls for the javascript and css files)
