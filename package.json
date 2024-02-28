@@ -1,0 +1,23 @@
+{
+  "name": "embed_metadata_in_pdf",
+  "version": "1.0.0",
+  "description": "in conjunction with my War on the Bluebook, I've made a prototype of a demonstration project proving that you can just embed machine-readable citation files directly into a PDF. (Also, finally proving that I hate the bluebook more than I hate writing javascript).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paultopia/embed_metadata_in_pdf.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paultopia/embed_metadata_in_pdf/issues"
+  },
+  "homepage": "https://github.com/paultopia/embed_metadata_in_pdf#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
