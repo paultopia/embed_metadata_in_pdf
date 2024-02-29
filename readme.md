@@ -9,3 +9,13 @@ This repo also contains two dependencies for this project, [Coherent PDF](https:
 ----
 
 note to self: dev build/server: `npx parcel index.html`build for prod `npx parcel build index.html --public-url ./` (the last thing is to force it to use relative urls for the javascript and css files)
+
+TODO:
+
+- see if it works on mobile/in safari
+  
+- test embedding on PDFs that already have metadata to make sure it doesn't overwrite or fail
+
+- test with non CSL JSON formats (esp. ris, bibtex)
+
+- get rid of junk development code like the console.logs  
