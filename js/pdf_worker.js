@@ -6,16 +6,16 @@ self.onmessage = function(e) {
     {
 	case 'embed':
 	  console.log("in worker");
-	  var pdfDoc = await PDFDocument.load(e.data.bytes);
+	  var pdfDoc = PDFDocument.load(e.data.bytes);
 	  console.log("opened pdf file");
 	  self.postMessage({mtype: 'progress', message: 'PDF loaded successfully for embedding. Working ...'});
 	  pdfDoc['getInfoDict'].set(PDFName.of('citations'), PDFHexString.fromText(e.data.citations));
 	  pdfDoc['getInfoDict'].set(PDFName.of('citationsFilename'), PDFHexString.fromText(e.data.citesFileName));
-	  const pdfOut = await pdfDoc.save();
+	  const pdfOut = pdfDoc.save();
 	  self.postMessage({mtype: 'pdfout', bytes: pdfOut});
 	break;
 	case 'extract':
-	  var pdfDoc = await PDFDocument.load(e.data.bytes);
+	  var pdfDoc = PDFDocument.load(e.data.bytes);
           self.postMessage({mtype: 'progress', message: 'PDF loaded successfully for extraction. Working ...'});
 	  var citations = pdfDoc.getInfoDict().get(PDFName.of('citations'))?.decodeText();
 	  var citationsFileName = pdfDoc.getInfoDict().get(PDFName.of('citationsFilename'))?.decodeText();

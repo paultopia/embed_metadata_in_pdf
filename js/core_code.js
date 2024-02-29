@@ -57,6 +57,7 @@ function filedownload(data, filename, mime, bom) {
 // checking code also adapted from coherentpdf
 // there's probably a better way to do this than duplicating code, but I'm not sure if I can pass in symbols that may not be set so fuckit.
 function ensureEmbedDataIsSet(timeout) {
+    console.log("running the ensure data is set function");
     var start = Date.now();
     return new Promise(waitForEmbedData);
  
@@ -152,6 +153,7 @@ var extractState = function() {};
 
 const citesSelector = document.getElementById('citation-selector');
 citesSelector.addEventListener('change', (event) => {
+    console.log("cites");
     const citesFileList = event.target.files;
     const citesFileName = citesFileList[0].name;
     const citesReader = new FileReader();
@@ -162,6 +164,7 @@ citesSelector.addEventListener('change', (event) => {
 	//const citesData = textEncoder.encode(asXMP);
 	embedState.cites = citesString;
 	embedState.citesFileName = citesFileName;
+	console.log("cites embed selector triggered")
 	console.log(embedState);
 	if (embedState.pdf){
 	    embedState.complete = true;
@@ -175,6 +178,7 @@ citesSelector.addEventListener('change', (event) => {
 
 const embedSelector = document.getElementById('embed-selector');
 embedSelector.addEventListener('change', (event) => {
+    console.log("pdf");
     const embedList = event.target.files;
     const embedName = embedList[0].name;
     const embedReader = new FileReader();
@@ -182,7 +186,8 @@ embedSelector.addEventListener('change', (event) => {
         const embedResult = event.target.result;
         embedState.pdf = embedResult;
 	embedState.pdfFileName = embedName;
-	//console.log(embedState);
+	console.log("pdf embed selector triggered")
+	console.log(embedState);
 	if (embedState.cites){
 	    embedState.complete = true;
 	    embedDataInPDf();
