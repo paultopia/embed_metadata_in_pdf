@@ -4,7 +4,7 @@ To run on your own, just spin up a local webserver. This runs in pure client-sid
 
 Available live at https://gowder.io/citations/ .  Tested and works in chrome on desktop, no clue about other platforms. 
 
-This repo also contains two dependencies for this project, [Coherent PDF](https://github.com/coherentgraphics/coherentpdf.js/) and [a Base64 library by Dan Kogai](https://github.com/dankogai/js-base64).  The former is under the AGPL-3.0 license, and the latter is under the BSD 3-Clause license. Please see the above links for license details, source code, etc. 
+This repo also contains two dependencies for this project, [Coherent PDF](https://github.com/coherentgraphics/coherentpdf.js/) and [a Base64 library by Dan Kogai](https://github.com/dankogai/js-base64).  The former is under the AGPL-3.0 license, and the latter is under the BSD 3-Clause license. Please see the above links for license details, source code, etc. It also uses [Skeleton](http://getskeleton.com/) for CSS. It attempts to embed Raleway font from google fonts, but that doesn't seem to be working and, frankly, I don't care enough to fix it.  
 
 **update**: coherentpdf broke.  now uses [PDF-lib](https://pdf-lib.js.org/) which is licensed under the MIT license. No longer uses coherentpdf at all (though I did adapt some of their example code)
 

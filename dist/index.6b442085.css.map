@@ -1,0 +1,1 @@
+{"mappings":"AAAA;;;;;AAKA","sources":["css/fonts.css"],"sourcesContent":["@font-face {\n  font-family: \"Raleway\";\n  src: url(\"./Raleway-VariableFont_wght.ttf\") format(\"ttf\");\n}\n\nbody {\n    font-family: 'Raleway';\n}\n"],"names":[],"version":3,"file":"index.6b442085.css.map","sourceRoot":"/__parcel_source_root/"}
