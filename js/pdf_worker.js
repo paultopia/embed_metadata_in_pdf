@@ -5,7 +5,9 @@ self.onmessage = function(e) {
    switch (e.data.mtype)
     {
 	case 'embed':
+	  console.log("in worker");
 	  var pdfDoc = await PDFDocument.load(e.data.bytes);
+	  console.log("opened pdf file");
 	  self.postMessage({mtype: 'progress', message: 'PDF loaded successfully for embedding. Working ...'});
 	  pdfDoc['getInfoDict'].set(PDFName.of('citations'), PDFHexString.fromText(e.data.citations));
 	  pdfDoc['getInfoDict'].set(PDFName.of('citationsFilename'), PDFHexString.fromText(e.data.citesFileName));

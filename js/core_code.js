@@ -96,7 +96,7 @@ function embedDataInPDf(){
 	//var datafile = new Uint8Array(embedState.xmp);
 	var w = new Worker(new URL("pdf_worker.js", import.meta.url), {type: 'module'})
 	// var w = new Worker("js/pdf_worker.js");
-	w.postMessage({mtype: 'embed', bytes: arr, citations: embedState.citesString, citesFileName = embedState.citesFileName});
+	w.postMessage({mtype: 'embed', bytes: arr, citations: embedState.citesString, citesFileName: embedState.citesFileName});
 	w.onmessage = function(e)
 	{
 	    switch (e.data.mtype)
@@ -161,7 +161,7 @@ citesSelector.addEventListener('change', (event) => {
 	//const textEncoder = new TextEncoder();
 	//const citesData = textEncoder.encode(asXMP);
 	embedState.cites = citesString;
-	embedState.citesFileName = cites.FileName;
+	embedState.citesFileName = citesFileName;
 	console.log(embedState);
 	if (embedState.pdf){
 	    embedState.complete = true;

@@ -666,13 +666,15 @@ function embedDataInPDf() {
         var arr = new Uint8Array(embedState.pdf);
         var pdfName = embedState.pdfFileName;
         var modifiedPdfName = `modified-${pdfName}`;
-        var datafile = new Uint8Array(embedState.xmp);
+        //var citesData = 
+        //var datafile = new Uint8Array(embedState.xmp);
         var w = new Worker(require("e8f31bb5804a08a4"));
         // var w = new Worker("js/pdf_worker.js");
         w.postMessage({
             mtype: "embed",
             bytes: arr,
-            metadata: datafile
+            citations: embedState.citesString,
+            citesFileName: embedState.citesFileName
         });
         w.onmessage = function(e) {
             switch(e.data.mtype){
@@ -701,8 +703,8 @@ function extractDataFromPDf() {
         w.onmessage = function(e) {
             switch(e.data.mtype){
                 case "dataExtracted":
-                    var citationData = extractJsonFromXMP(e.data.metadata);
-                    filedownload(citationData.json, citationData.fileName, "text/plain");
+                    //var citationData = extractJsonFromXMP(e.data.metadata);
+                    filedownload(e.data.citations, e.data.fileName, "text/plain");
                     document.getElementById("progress").innerHTML = "Processing finished. Citaton data file downloaded. Reload page to do another file.";
                     w.terminate();
                     break;
@@ -724,12 +726,13 @@ citesSelector.addEventListener("change", (event)=>{
     const citesFileName = citesFileList[0].name;
     const citesReader = new FileReader();
     citesReader.addEventListener("load", (event)=>{
-        var citesResult = event.target.result;
-        var asXMP = makeXMP(citesResult, citesFileName);
-        const textEncoder = new TextEncoder();
-        const xmpData = textEncoder.encode(asXMP);
-        embedState.xmp = xmpData;
-        //console.log(embedState);
+        var citesString = event.target.result;
+        //var asXMP = makeXMP(citesResult, citesFileName);
+        //const textEncoder = new TextEncoder();
+        //const citesData = textEncoder.encode(asXMP);
+        embedState.cites = citesString;
+        embedState.citesFileName = citesFileName;
+        console.log(embedState);
         if (embedState.pdf) {
             embedState.complete = true;
             embedDataInPDf();
@@ -748,7 +751,7 @@ embedSelector.addEventListener("change", (event)=>{
         embedState.pdf = embedResult;
         embedState.pdfFileName = embedName;
         //console.log(embedState);
-        if (embedState.xmp) {
+        if (embedState.cites) {
             embedState.complete = true;
             embedDataInPDf();
         }
