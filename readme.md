@@ -19,3 +19,9 @@ TODO:
 - test with non CSL JSON formats (esp. ris, bibtex)
 
 - get rid of junk development code like the console.logs  
+
+**NOTE**
+
+- as of the morning of 2-29-24, I discovered a bug that seems to corrupt some PDF files.  Working on it.
+
+

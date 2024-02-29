@@ -127,7 +127,7 @@ function extractDataFromPDf(){
 		case 'dataExtracted':
 		  var citationData = extractJsonFromXMP(e.data.metadata);
 		  filedownload(citationData.json, citationData.fileName, "text/plain");
-		  document.getElementById("progress").innerHTML = 'Processing finished. Citaiton data file downloaded. Reload page to do another file.';
+		  document.getElementById("progress").innerHTML = 'Processing finished. Citaton data file downloaded. Reload page to do another file.';
 		  w.terminate();
 		break;
 		case 'progress':
@@ -160,7 +160,7 @@ citesSelector.addEventListener('change', (event) => {
 	const textEncoder = new TextEncoder();
 	const xmpData = textEncoder.encode(asXMP);
 	embedState.xmp = xmpData;
-	console.log(embedState);
+	//console.log(embedState);
 	if (embedState.pdf){
 	    embedState.complete = true;
 	    embedDataInPDf();
@@ -180,7 +180,7 @@ embedSelector.addEventListener('change', (event) => {
         const embedResult = event.target.result;
         embedState.pdf = embedResult;
 	embedState.pdfFileName = embedName;
-	console.log(embedState);
+	//console.log(embedState);
 	if (embedState.xmp){
 	    embedState.complete = true;
 	    embedDataInPDf();

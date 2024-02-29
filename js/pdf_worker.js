@@ -11,7 +11,11 @@ self.onmessage = function(e) {
 	  var metadata = e.data.metadata;
 	  coherentpdf.setFast();
 	  self.postMessage({mtype: 'progress', message: 'PDF loaded successfully for embedding. Working ...'});
-	  coherentpdf.decryptPdf(pdf, "");
+	  //coherentpdf.decryptPdf(pdf, "");
+	  var existing_md = coherentpdf.getMetadata(pdf);
+	  //console.log("existing metadata:");
+	  //console.log(existing_md);
+	  //coherentpdf.removeMetadata(pdf)
 	  coherentpdf.setMetadataFromByteArray(pdf, metadata);
 	  var mem = coherentpdf.toMemory(pdf, false, false);
 	  self.postMessage({mtype: 'pdfout', bytes: mem});
