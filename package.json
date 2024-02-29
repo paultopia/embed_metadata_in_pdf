@@ -29,7 +29,6 @@
     "util": "^0.12.5"
   },
   "dependencies": {
-    "coherentpdf": "^2.5.5",
     "js-base64": "^3.7.7",
     "pdf-lib": "^1.17.1"
   }

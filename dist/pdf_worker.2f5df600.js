@@ -588,11 +588,7 @@ var _pdfLib = require("pdf-lib");
 self.onmessage = async function(e) {
     switch(e.data.mtype){
         case "embed":
-            console.log("in worker");
             var pdfDoc = await (0, _pdfLib.PDFDocument).load(e.data.bytes);
-            console.log("opened pdf file");
-            console.log(e.data.citations);
-            console.log(e.data.citesFileName);
             self.postMessage({
                 mtype: "progress",
                 message: "PDF loaded successfully for embedding. Working ..."

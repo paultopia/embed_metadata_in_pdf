@@ -6,6 +6,8 @@ Available live at https://gowder.io/citations/ .  Tested and works in chrome on 
 
 This repo also contains two dependencies for this project, [Coherent PDF](https://github.com/coherentgraphics/coherentpdf.js/) and [a Base64 library by Dan Kogai](https://github.com/dankogai/js-base64).  The former is under the AGPL-3.0 license, and the latter is under the BSD 3-Clause license. Please see the above links for license details, source code, etc. 
 
+**update**: coherentpdf broke.  now uses [PDF-lib](https://pdf-lib.js.org/) which is licensed under the MIT license. No longer uses coherentpdf at all (though I did adapt some of their example code)
+
 ----
 
 note to self: dev build/server: `npx parcel index.html`build for prod `npx parcel build index.html --public-url ./` (the last thing is to force it to use relative urls for the javascript and css files)

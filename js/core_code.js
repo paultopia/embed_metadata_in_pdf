@@ -1,30 +1,5 @@
 import { Base64 } from 'js-base64';
 
-function makeXMP(jsonString, fileName){
-    var b64Json = Base64.encode(jsonString);
-    var xmpString =`<x:xmpmeta xmlns:x="adobe:ns:meta/">
-
-  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	   xmlns:xmp="http://ns.adobe.com/xap/1.0/">
-
-<rdf:Description rdf:about="">
-
-<xmp:citeFile>${fileName}</xmp:citeFile> </rdf:Description>
-
-<xmp:CSL>${b64Json}</xmp:CSL> </rdf:Description>
-
-</rdf:RDF> </x:xmpmeta>`;
-    return xmpString;
-};
-
-function extractJsonFromXMP(xmpString){
-    const citesPattern = /<xmp:CSL>(.*)<\/xmp:CSL>/;
-    const b64 = xmpString.match(citesPattern)[1];
-    var json = Base64.decode(b64);
-    const citesFileNamePattern = /<xmp:citeFile>(.*)<\/xmp:citeFile>/;
-    const citesFileName = xmpString.match(citesFileNamePattern)[1];
-    return {json: json, fileName: citesFileName};
-};
 
 // swiped from coherentpdf example code
 function filedownload(data, filename, mime, bom) {
@@ -57,7 +32,6 @@ function filedownload(data, filename, mime, bom) {
 // checking code also adapted from coherentpdf
 // there's probably a better way to do this than duplicating code, but I'm not sure if I can pass in symbols that may not be set so fuckit.
 function ensureEmbedDataIsSet(timeout) {
-    console.log("running the ensure data is set function");
     var start = Date.now();
     return new Promise(waitForEmbedData);
  
@@ -93,10 +67,7 @@ function embedDataInPDf(){
 	var arr = new Uint8Array(embedState.pdf);
 	var pdfName = embedState.pdfFileName;
 	var modifiedPdfName = `modified-${pdfName}`;
-	//var citesData = 
-	//var datafile = new Uint8Array(embedState.xmp);
 	var w = new Worker(new URL("pdf_worker.js", import.meta.url), {type: 'module'})
-	// var w = new Worker("js/pdf_worker.js");
 	w.postMessage({mtype: 'embed', bytes: arr, citations: embedState.cites, citesFileName: embedState.citesFileName});
 	w.onmessage = function(e)
 	{
@@ -120,14 +91,12 @@ function extractDataFromPDf(){
 	document.getElementById("progress").innerHTML = 'PDF File loaded from disc. Processing...';
 	var arr = new Uint8Array(extractState.pdf);
 	var w = new Worker(new URL("pdf_worker.js", import.meta.url), {type: 'module'})
-//	var w = new Worker("js/pdf_worker.js");
 	w.postMessage({mtype: 'extract', bytes: arr});
 	w.onmessage = function(e)
 	{
 	    switch (e.data.mtype)
 	    {
 		case 'dataExtracted':
-		  //var citationData = extractJsonFromXMP(e.data.metadata);
 		  filedownload(e.data.citations, e.data.fileName, "text/plain");
 		  document.getElementById("progress").innerHTML = 'Processing finished. Citaton data file downloaded. Reload page to do another file.';
 		  w.terminate();
@@ -153,19 +122,13 @@ var extractState = function() {};
 
 const citesSelector = document.getElementById('citation-selector');
 citesSelector.addEventListener('change', (event) => {
-    console.log("cites");
     const citesFileList = event.target.files;
     const citesFileName = citesFileList[0].name;
     const citesReader = new FileReader();
     citesReader.addEventListener('load', (event) => {
         var citesString = event.target.result;
-	//var asXMP = makeXMP(citesResult, citesFileName);
-	//const textEncoder = new TextEncoder();
-	//const citesData = textEncoder.encode(asXMP);
 	embedState.cites = citesString;
 	embedState.citesFileName = citesFileName;
-	console.log("cites embed selector triggered")
-	console.log(embedState);
 	if (embedState.pdf){
 	    embedState.complete = true;
 	    embedDataInPDf();
@@ -178,7 +141,6 @@ citesSelector.addEventListener('change', (event) => {
 
 const embedSelector = document.getElementById('embed-selector');
 embedSelector.addEventListener('change', (event) => {
-    console.log("pdf");
     const embedList = event.target.files;
     const embedName = embedList[0].name;
     const embedReader = new FileReader();
@@ -186,8 +148,6 @@ embedSelector.addEventListener('change', (event) => {
         const embedResult = event.target.result;
         embedState.pdf = embedResult;
 	embedState.pdfFileName = embedName;
-	console.log("pdf embed selector triggered")
-	console.log(embedState);
 	if (embedState.cites){
 	    embedState.complete = true;
 	    embedDataInPDf();
