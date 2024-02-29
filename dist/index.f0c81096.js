@@ -674,7 +674,7 @@ function embedDataInPDf() {
         w.postMessage({
             mtype: "embed",
             bytes: arr,
-            citations: embedState.citesString,
+            citations: embedState.cites,
             citesFileName: embedState.citesFileName
         });
         w.onmessage = function(e) {

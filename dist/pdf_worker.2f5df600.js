@@ -591,12 +591,14 @@ self.onmessage = async function(e) {
             console.log("in worker");
             var pdfDoc = await (0, _pdfLib.PDFDocument).load(e.data.bytes);
             console.log("opened pdf file");
+            console.log(e.data.citations);
+            console.log(e.data.citesFileName);
             self.postMessage({
                 mtype: "progress",
                 message: "PDF loaded successfully for embedding. Working ..."
             });
-            pdfDoc["getInfoDict"].set((0, _pdfLib.PDFName).of("citations"), (0, _pdfLib.PDFHexString).fromText(e.data.citations));
-            pdfDoc["getInfoDict"].set((0, _pdfLib.PDFName).of("citationsFilename"), (0, _pdfLib.PDFHexString).fromText(e.data.citesFileName));
+            pdfDoc["getInfoDict"]().set((0, _pdfLib.PDFName).of("citations"), (0, _pdfLib.PDFHexString).fromText(e.data.citations));
+            pdfDoc["getInfoDict"]().set((0, _pdfLib.PDFName).of("citationsFilename"), (0, _pdfLib.PDFHexString).fromText(e.data.citesFileName));
             const pdfOut = await pdfDoc.save();
             self.postMessage({
                 mtype: "pdfout",
