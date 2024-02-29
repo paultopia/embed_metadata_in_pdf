@@ -1,34 +1,23 @@
-const coherentpdf = require('coherentpdf')
 
-// importScripts('coherentpdf.browser.min.js')
-// this appears to find files relative to the directory the js is in, not relative to index.html (at least judging by chrome errors)
+import { PDFDocument, PDFHexString, PDFName } from 'pdf-lib';
 
 self.onmessage = function(e) {
    switch (e.data.mtype)
     {
 	case 'embed':
-	  var pdf = coherentpdf.fromMemory(e.data.bytes, "");
-	  var metadata = e.data.metadata;
-	  coherentpdf.setFast();
+	  var pdfDoc = await PDFDocument.load(e.data.bytes);
 	  self.postMessage({mtype: 'progress', message: 'PDF loaded successfully for embedding. Working ...'});
-	  //coherentpdf.decryptPdf(pdf, "");
-	  var existing_md = coherentpdf.getMetadata(pdf);
-	  //console.log("existing metadata:");
-	  //console.log(existing_md);
-	  //coherentpdf.removeMetadata(pdf)
-	  coherentpdf.setMetadataFromByteArray(pdf, metadata);
-	  var mem = coherentpdf.toMemory(pdf, false, false);
-	  self.postMessage({mtype: 'pdfout', bytes: mem});
+	  pdfDoc['getInfoDict'].set(PDFName.of('citations'), PDFHexString.fromText(e.data.citations));
+	  pdfDoc['getInfoDict'].set(PDFName.of('citationsFilename'), PDFHexString.fromText(e.data.citesFileName));
+	  const pdfOut = await pdfDoc.save();
+	  self.postMessage({mtype: 'pdfout', bytes: pdfOut});
 	break;
 	case 'extract':
-	  var pdf = coherentpdf.fromMemory(e.data.bytes, "");
-	  coherentpdf.setFast();
+	  var pdfDoc = await PDFDocument.load(e.data.bytes);
           self.postMessage({mtype: 'progress', message: 'PDF loaded successfully for extraction. Working ...'});
-	  coherentpdf.decryptPdf(pdf, "");
-	  var extractedMetadata = coherentpdf.getMetadata(pdf);
-	  var decoder = new TextDecoder("utf-8");
-	  var decodedMetadata = decoder.decode(extractedMetadata);
-	  self.postMessage({mtype: 'dataExtracted', metadata: decodedMetadata});
+	  var citations = pdfDoc.getInfoDict().get(PDFName.of('citations'))?.decodeText();
+	  var citationsFileName = pdfDoc.getInfoDict().get(PDFName.of('citationsFilename'))?.decodeText();
+	  self.postMessage({mtype: 'dataExtracted', citations: citations, fileName: citationsFileName});
 	break;
     }
 }
